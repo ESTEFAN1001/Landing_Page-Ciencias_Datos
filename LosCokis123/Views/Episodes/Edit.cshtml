@@ -1,0 +1,65 @@
+﻿@model LosCokis123.Models.Episode
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h4>Editar Episodio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label class="control-label">Titulo</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Descripcion</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Podcast</label>
+                <select asp-for="PodcastId" class="form-control" asp-items="ViewBag.PodcastId"></select>
+                <span asp-validation-for="PodcastId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Autor</label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Duracion</label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group collapse">
+                <label asp-for="AudioUrl" class="control-label"></label>
+                <input asp-for="AudioUrl" class="form-control" />
+                <span asp-validation-for="AudioUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label id="audio" class="control-label">Elige el Audio</label>
+                <input name="audio" type="file" accept=".mp3" class="form-control-file" required />
+            </div>
+            <div class="form-group collapse">
+                <label asp-for="CreateAt" class="control-label"></label>
+                <input asp-for="CreateAt" class="form-control" />
+                <span asp-validation-for="CreateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-4">
+                <input type="submit" value="Editar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
