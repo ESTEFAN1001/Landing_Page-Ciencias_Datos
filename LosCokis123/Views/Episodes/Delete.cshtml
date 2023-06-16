@@ -1,0 +1,77 @@
+﻿@model LosCokis123.Models.Episode
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h3>Esta seguro de eliminar el episodio...</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Titulo
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+           Descripcion
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+           Autor
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Author)
+        </dd>
+        @* <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.Duration)
+        </dd>*@
+        <dt class="col-sm-2">
+            Audio
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.AudioUrl.Length > 20)
+            {
+                @Html.Raw(Model.AudioUrl)
+            }
+            @if (Model.AudioUrl.Length < 20)
+            {
+                <br>
+                <audio controls loop class="mb-5">
+                    <source src="@Html.DisplayFor(model => model.AudioUrl)">
+                    Tu navegador no soporta este audio
+                </audio>
+            }
+        </dd>
+        @*<dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.CreateAt)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.CreateAt)
+        </dd>*@
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Podcast)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Podcast.Title)
+        </dd>
+        <dt class="col-sm-2">
+           Imagen
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Html.DisplayFor(model => model.Podcast.Image)" width="400" height="200" />
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+        <a asp-action="Index">Regresar al menu</a>
+    </form>
+</div>

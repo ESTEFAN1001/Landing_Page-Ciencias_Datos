@@ -1,0 +1,60 @@
+﻿@model LosCokis123.Models.Episode
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Episodio</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">Titulo</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Descripcion</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Podcast</label>
+                <select asp-for="PodcastId" class ="form-control" asp-items="ViewBag.PodcastId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label">Autor</label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Duracion</label>
+                <input asp-for="Duration" class="form-control" type="number"/>
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">URL del Audio</label>
+                <input asp-for="AudioUrl" class="form-control" />
+                <span asp-validation-for="AudioUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group collapse">
+                <label asp-for="CreateAt" class="control-label"></label>
+                <input asp-for="CreateAt" class="form-control" />
+                <span asp-validation-for="CreateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-controller="Episodes" asp-action="Index">Ver la lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

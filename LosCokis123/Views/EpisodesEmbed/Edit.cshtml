@@ -1,0 +1,70 @@
+﻿@model LosCokis123.Models.Episode
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Episode</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PodcastId" class="control-label"></label>
+                <select asp-for="PodcastId" class="form-control" asp-items="ViewBag.PodcastId"></select>
+                <span asp-validation-for="PodcastId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Duration" class="control-label"></label>
+                <input asp-for="Duration" class="form-control" />
+                <span asp-validation-for="Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AudioUrl" class="control-label"></label>
+                <input id="audio" asp-for="AudioUrl" class="form-control" />
+                <button class="btn btn-outline-light" type="button" id="clear">Vaciar campo</button>
+                <span asp-validation-for="AudioUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group collapse">
+                <label asp-for="CreateAt" class="control-label"></label>
+                <input asp-for="CreateAt" class="form-control" />
+                <span asp-validation-for="CreateAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+  document.getElementById('clear').addEventListener('click', function() {
+    document.getElementById('audio').value = '';
+  });
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

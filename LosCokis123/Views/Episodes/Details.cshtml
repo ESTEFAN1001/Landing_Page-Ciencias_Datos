@@ -1,0 +1,129 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using LosCokis123.Areas.Identity.Data
+
+@model LosCokis123.Models.Episode
+@inject SignInManager<LosCokis123User> SignInManager
+@inject UserManager<LosCokis123User> UserManager
+
+@{
+    ViewData["Title"] = "Details";
+}
+<div>
+    <!-- Page Content-->
+    <div class="container px-4 px-lg-5">
+        <!-- Heading Row-->
+        <div class="row gx-4 gx-lg-5 align-items-center my-5 pt-4 pb-4" style="background-color:black; border-radius: 10pt">
+            <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="@Html.DisplayFor(model => model.Podcast.Image)" alt="..." /></div>
+            <div class="col-lg-5">
+                <h1 class="font-weight-light mb-5">@Html.DisplayFor(model => model.Title)</h1>
+
+                <p>Descripcion: @Html.DisplayFor(model => model.Description)</p>
+                <p>Autor: @Html.DisplayFor(model => model.Author)</p>
+                @if(Model.AudioUrl.Length > 20)
+                {
+                    @Html.Raw(Model.AudioUrl)
+                }
+                @if (Model.AudioUrl.Length < 20)
+                {
+                    <br>
+                    <audio controls loop class="mb-5">
+                        <source src="@Html.DisplayFor(model => model.AudioUrl)">
+                        Tu navegador no soporta este audio
+                    </audio>
+                }
+                
+                <table class="table table-sm">
+                    <tr>
+                        <th>
+                            <form asp-controller="Favorites" asp-action="Create" method="post">
+                                <input name="episode_id" value="@Model?.Id" hidden />
+                                <input name="user_id" value="@UserManager.GetUserId(User)" hidden />
+                                <input name="favorite_id" value="@Model?.Favorites.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Id" hidden />
+
+                                @if (Model?.Favorites?.FirstOrDefault(l => l.UserId == UserManager.GetUserId(User))?.Favorite1 != false)
+                                {
+                                    <button type="submit" value="@(Model?.Favorites?.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Favorite1 != false? Html.Raw("Favorite"):Html.Raw("Unpreferred"))">
+                                        <img src="~/images/reaction/favorite.png" width="40" height="40" />
+                                    </button>
+
+                                }
+                                else
+                                {
+                                    <button type="submit" value="@(Model?.Favorites?.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Favorite1 != false? Html.Raw("Favorite"):Html.Raw("Unpreferred"))">
+                                        <img src="~/images/reaction/unpreferred.png" width="40" height="40" />
+                                    </button>
+                                }
+                            </form>
+                        </th>
+                        <th>
+                            <form asp-controller="Likes" asp-action="Create" method="post" class="mb-5">
+                                <input name="episode_id" value="@Model?.Id" hidden />
+                                <input name="user_id" value="@UserManager.GetUserId(User)" hidden />
+                                <input name="like_id" value="@Model?.Likes.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Id" hidden />
+                                @if (Model?.Likes?.FirstOrDefault(l => l.UserId == UserManager.GetUserId(User))?.Likeop != 2)
+                                {
+                                    <button type="submit" value="@(Model?.Likes?.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Likeop != 2? Html.Raw("Like"):Html.Raw("Dislike"))">
+                                        <img src="~/images/reaction/like.png" width="40" height="40" />
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="submit" value="@(Model?.Likes?.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Likeop != 2? Html.Raw("Like"):Html.Raw("Dislike"))">
+                                        <img src="~/images/reaction/dislike.png" width="40" height="40" />
+                                    </button>
+                                }
+                            </form>
+                        </th>
+                        <th>
+                            <form asp-controller="Comments" asp-action="Create" method="post">
+                                <input name="episode_id" value="@Model?.Id" hidden />
+                                <input name="user_id" value="@UserManager.GetUserId(User)" hidden />
+                                <input name="comment_id" value="@Model?.Comments.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Id" hidden />
+                                <input type="text" name="coment" value="@Model?.Comments.FirstOrDefault(l=>l.UserId == UserManager.GetUserId(User))?.Coment" />
+                                <input type="submit" value="@(Model?.Comments?.Any(l=>l.UserId == UserManager.GetUserId(User)) == true? Html.Raw("Update Comment"):Html.Raw("Comment"))" class="btn btn-success" />
+                            </form>
+                        </th>
+                    </tr>
+                </table>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<div>
+</div>
+<div class="container" style="padding: 15px 10px;">
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <h2>Titulo del articulo 1</h2>
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="~/images/carousel/item1.jpg" alt="..." />
+            <figure></figure>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat distinctio illo rerum atque ducimus, laboriosam debitis eum deserunt ab libero quis voluptas, illum, perferendis numquam aut aliquam itaque qui magnam!</p>
+            <a href="#" class="btn btn-success">Leer mas</a>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <h2>Titulo del articulo 2</h2>
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="~/images/carousel/item2.jpg" alt="..." />
+            <figure></figure>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat distinctio illo rerum atque ducimus, laboriosam debitis eum deserunt ab libero quis voluptas, illum, perferendis numquam aut aliquam itaque qui magnam!</p>
+            <a href="#" class="btn btn-success">Leer mas</a>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <h2>Titulo del articulo 3</h2>
+            <img class="img-fluid rounded mb-4 mb-lg-0" src="~/images/carousel/item3.jpg" alt="..." />
+            <figure></figure>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat distinctio illo rerum atque ducimus, laboriosam debitis eum deserunt ab libero quis voluptas, illum, perferendis numquam aut aliquam itaque qui magnam!</p>
+            <a href="#" class="btn btn-success">Leer mas</a>
+        </div>
+
+    </div>
+</div><!-- Fin Sección de Artículos -->
+<div>
+    @if (User.IsInRole("admin"))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+        <a asp-action = "Index" > Back to List</a>
+    }
+</div>

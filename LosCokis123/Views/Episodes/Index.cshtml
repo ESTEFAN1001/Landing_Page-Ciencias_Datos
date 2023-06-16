@@ -1,0 +1,64 @@
+﻿@model IEnumerable<LosCokis123.Models.Episode>
+@{
+    ViewData["Title"] = "Index";
+}
+@if (User.IsInRole("admin"))
+{
+    <p>
+        <a asp-action="Create">Crear episodio |</a>
+        <a asp-controller="EpisodesEmbed" asp-action="Create">Crear Embebed</a>
+    </p>
+}
+<div class="container px-4 px-lg-5">
+    <!-- Heading Row-->
+    <div class="row gx-4 gx-lg-5 align-items-center my-5 pt-4 pb-4">
+        <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0" src="~/images/carousel/item2.jpg" alt="..." /></div>
+        <div class="col-lg-5">
+            <h3 class="font-weight-light mb-5">“El objetivo es convertir los datos en información y la información en conocimiento.”</h3>
+            <p>Carly Fiorina</p>
+        </div>
+    </div>
+</div>
+
+<div class="row gx-4 gx-lg-5">
+    @foreach (var item in Model)
+    {
+        if(item.PodcastId != null)
+        {
+            <div class="col-md-4 mb-5">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h4>
+                        <hr>
+                        <img class="card-img-top" src="@Html.DisplayFor(modelItem => item.Podcast.Image)" />
+                        <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+                    </div>
+                    <div class="card-footer">
+                        <audio controls loop>
+                            <source src="">
+                            Your browser does not Support the audio Tag
+                        </audio>
+                        <br>
+                        <a asp-action="Details" asp-route-id="@item.Id">Escuchar Ahora!!</a>
+                        @if (User.IsInRole("admin"))
+                        {
+                            @if (item.AudioUrl.Length > 20)
+                            {
+                                <br>
+                                <a asp-controller="EpisodesEmbed" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                            }
+                            @if (item.AudioUrl.Length < 20)
+                            {
+                                <br>
+                                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                            }
+                            
+                            <br>
+                            <a asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>

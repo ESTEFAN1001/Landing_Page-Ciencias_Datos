@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using LosCokis123.Areas.Identity.Data
+
+@inject SignInManager<LosCokis123User> SignInManager
+@inject UserManager<LosCokis123User> UserManager
+
+<ul class="navbar-nav">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li class="nav-item">
+        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)</a>
+    </li>
+    <li class="nav-item">
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link get-started-btn scrollto pl-3 pr-3">Cerrar Sesion</button>
+        </form>
+    </li>
+}
+else
+{
+        <a class="nav-link get-started-btn scrollto pl-3 pr-3" id="login" asp-area="Identity" asp-page="/Account/Login">Iniciar Sesion</a>
+}
+</ul>
